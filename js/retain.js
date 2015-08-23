@@ -1,15 +1,16 @@
-$(function(){
+(function(){
 
     var model = {
         init: function() {
+            // If notes is being created for first time in localstorage
             if (!localStorage.notes) {
                 localStorage.notes = JSON.stringify([]);
             }
         },
         add: function(obj) {
-            var data = JSON.parse(localStorage.notes);
+            var data = JSON.parse(localStorage.notes); // Converting Json string to Json variable
             data.push(obj);
-            localStorage.notes = JSON.stringify(data);
+            localStorage.notes = JSON.stringify(data); // Converting Json variable to Json string
         },
         getAllNotes: function() {
             return JSON.parse(localStorage.notes);
@@ -17,7 +18,7 @@ $(function(){
     };
 
 
-    var octopus = {
+    var controller = {
         addNewNote: function(noteStr) {
             model.add({
                 content: noteStr
@@ -42,7 +43,7 @@ $(function(){
             var newNoteForm = $('#new-note-form');
             var newNoteContent = $('#new-note-content');
             newNoteForm.submit(function(e){
-                octopus.addNewNote(newNoteContent.val());
+                controller.addNewNote(newNoteContent.val());
                 newNoteContent.val('');
                 e.preventDefault();
             });
@@ -50,7 +51,7 @@ $(function(){
         },
         render: function(){
             var htmlStr = '';
-            octopus.getNotes().forEach(function(note){
+            controller.getNotes().forEach(function(note){
                 htmlStr += '<li class="note">'+
                         note.content +
                     '</li>';
@@ -59,5 +60,5 @@ $(function(){
         }
     };
 
-    octopus.init();
-});
+    controller.init();
+})();
