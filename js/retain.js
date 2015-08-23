@@ -21,13 +21,14 @@
     var controller = {
         addNewNote: function(noteStr) {
             model.add({
-                content: noteStr
+                content: noteStr,
+                postedDate : Date.now()
             });
             view.render();
         },
 
         getNotes: function() {
-            return model.getAllNotes();
+            return model.getAllNotes().reverse();
         },
 
         init: function() {
@@ -53,7 +54,9 @@
             var htmlStr = '';
             controller.getNotes().forEach(function(note){
                 htmlStr += '<li class="note">'+
-                        note.content +
+                        '<span class="note-date">' + new Date(note.postedDate).toDateString() + '</span>' +
+                        note.content + 
+                        
                     '</li>';
             });
             this.noteList.html( htmlStr );
